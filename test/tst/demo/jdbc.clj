@@ -11,7 +11,7 @@
 (defonce ds (jdbc/get-datasource db))
 
 (dotest
-  (spy :drop--result (jdbc/execute! ds ["drop table if exists address"]))
+  (jdbc/execute! ds ["drop table if exists address"])
   (let [r11 (jdbc/execute! ds ["
                 create table address (
                   id      int auto_increment primary key,
@@ -35,14 +35,18 @@
     (is= r22 #:ADDRESS{:ID 2})
     (is= r23 #:ADDRESS{:ID 2, :NAME "Marge Simpson", :EMAIL "marge@springfield.co"}))
 
-  (let [r32 (jdbc/execute-one! ds ["
+  (let [r32     (jdbc/execute-one! ds ["
                 insert into address(name, email)
                   values( 'Bart Simpson', 'bart@mischief.com' ) "]
-              {:return-keys true :builder-fn rs/as-unqualified-lower-maps})
-        r33 (jdbc/execute-one! ds ["select * from address where id= ?" 3]
-              {:return-keys true :builder-fn rs/as-unqualified-lower-maps})]
+                  {:return-keys true :builder-fn rs/as-unqualified-lower-maps})
+        r33     (jdbc/execute-one! ds ["select * from address where id= ?" 3]
+                  {:builder-fn rs/as-unqualified-lower-maps})
+        ds-opts (jdbc/with-options ds {:builder-fn rs/as-lower-maps})
+        r34     (jdbc/execute-one! ds-opts ["select * from address where id= ?" 3])
+        ]
     (is= r32 {:id 3})
-    (is= r33 {:id 3, :name "Bart Simpson", :email "bart@mischief.com"}))
+    (is= r33 {:id 3, :name "Bart Simpson", :email "bart@mischief.com"})
+    (is= r34 #:address{:id 3, :name "Bart Simpson", :email "bart@mischief.com"}))
 
   )
 

@@ -46,10 +46,40 @@
         ]
     (is= r32 {:id 3})
     (is= r33 {:id 3, :name "Bart Simpson", :email "bart@mischief.com"})
-    (is= r34 #:address{:id 3, :name "Bart Simpson", :email "bart@mischief.com"}))
+    (is= r34 #:address{:id 3, :name "Bart Simpson", :email "bart@mischief.com"})))
+
+
+(dotest
+  (jdbc/execute! ds ["drop table if exists invoice"])
+  (let [r41 (jdbc/execute! ds ["
+                create table invoice (
+                  id            int auto_increment primary key,
+                  product       varchar(32),
+                  unit_price    decimal(10,2),
+                  unit_count    int unsigned,
+                  customer_id   int unsigned
+                ) "])
+        r42 (jdbc/execute! ds ["
+                insert into invoice(product, unit_price, unit_count, customer_id)
+                  values
+                    ( 'apple',    0.99, 6, 100 ),
+                    ( 'banana',   1.25, 3, 100 ),
+                    ( 'cucumber', 2.49, 2, 100 )
+                "])
+        r43 (reduce
+              (fn [cost row]
+                (+ cost (* (:unit_price row)
+                          (:unit_count row))))
+              0
+              (jdbc/plan ds ["select * from invoice where customer_id = ? " 100]))
+        ]
+    (is= r41 [#:next.jdbc{:update-count 0}])
+    (is= r42 [#:next.jdbc{:update-count 3}])
+    (is= r43 14.67M))
+
+
 
   )
-
 
 (comment
 

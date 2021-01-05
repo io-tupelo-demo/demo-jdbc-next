@@ -2,6 +2,7 @@
   (:use demo.core tupelo.core tupelo.test)
   (:require
     [next.jdbc :as jdbc]
+    [next.jdbc.result-set :as rs]
     ))
 
 (defonce db {:dbtype "h2"
@@ -33,6 +34,15 @@
         r23 (jdbc/execute-one! ds ["select * from address where id= ?" 2])]
     (is= r22 #:ADDRESS{:ID 2})
     (is= r23 #:ADDRESS{:ID 2, :NAME "Marge Simpson", :EMAIL "marge@springfield.co"}))
+
+  (let [r32 (jdbc/execute-one! ds ["
+                insert into address(name, email)
+                  values( 'Bart Simpson', 'bart@mischief.com' ) "]
+              {:return-keys true :builder-fn rs/as-unqualified-lower-maps})
+        r33 (jdbc/execute-one! ds ["select * from address where id= ?" 3]
+              {:return-keys true :builder-fn rs/as-unqualified-lower-maps})]
+    (is= r32 {:id 3})
+    (is= r33 {:id 3, :name "Bart Simpson", :email "bart@mischief.com"}))
 
   )
 

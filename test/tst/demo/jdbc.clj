@@ -11,23 +11,28 @@
 
 (dotest
   (spy :drop--result (jdbc/execute! ds ["drop table if exists address"]))
-  (let [r1 (jdbc/execute! ds ["
+  (let [r11 (jdbc/execute! ds ["
                 create table address (
                   id      int auto_increment primary key,
                   name    varchar(32),
                   email   varchar(255)
                 ) "])
-        r2 (jdbc/execute! ds ["
+        r12 (jdbc/execute! ds ["
                 insert into address(name, email)
                   values( 'Homer Simpson', 'homer@springfield.co' ) "])
-        r3 (jdbc/execute! ds ["select * from address "])
+        r13 (jdbc/execute! ds ["select * from address "])
         ]
-    ; (spyxx r1)
-    ; (spyxx r2)
-    (is= (spyxx r3)
-      [#:ADDRESS{:ID 1, :NAME "Homer Simpson", :EMAIL "homer@springfield.co"}])
+    (is= r11 [#:next.jdbc{:update-count 0}])
+    (is= r12 [#:next.jdbc{:update-count 1}])
+    (is= r13 [#:ADDRESS{:ID 1, :NAME "Homer Simpson", :EMAIL "homer@springfield.co"}]))
 
-    )
+  (let [r22 (jdbc/execute-one! ds ["
+                insert into address(name, email)
+                  values( 'Marge Simpson', 'marge@springfield.co' ) "]
+              {:return-keys true})
+        r23 (jdbc/execute-one! ds ["select * from address where id= ?" 2])]
+    (is= r22 #:ADDRESS{:ID 2})
+    (is= r23 #:ADDRESS{:ID 2, :NAME "Marge Simpson", :EMAIL "marge@springfield.co"}))
 
   )
 

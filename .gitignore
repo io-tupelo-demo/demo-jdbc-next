@@ -1,0 +1,17 @@
+*.class
+*.db
+*.idea
+*.iml
+*.out
+*.pyc
+*.swp
+.*.swo
+.*.swp
+.lein-*
+.lein-repl-history
+.nrepl-port
+checkouts
+classes
+out*.txt
+tags
+target

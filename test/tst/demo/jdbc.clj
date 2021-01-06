@@ -9,10 +9,10 @@
 (def db-info {:dbtype "h2:mem"
               :dbname "example"})
 
-(defonce ds (jdbc/get-datasource db-info))
+(def ds (jdbc/get-datasource db-info))
 
 (dotest
-  (jdbc/execute! ds ["DROP TABLE IF EXISTS address"])
+  (jdbc/execute! ds ["drop table if exists address"])
   (let [r11 (jdbc/execute! ds ["
                 create table address (
                   id      int auto_increment primary key,
@@ -77,7 +77,6 @@
     (is= r42 [#:next.jdbc{:update-count 3}])
     (is= r43 14.67M)))
 
-;---------------------------------------------------------------------------------------------------
 (dotest
   ; creates & drops a connection (& transaction) for each command
   (jdbc/execute-one! ds ["drop table if exists langs"])
@@ -151,8 +150,7 @@
         (let [expected [{:langs/lang "Clojure", :releases/desc "ancients"}
                         {:langs/lang "Clojure", :releases/desc "1.8"}
                         {:langs/lang "Clojure", :releases/desc "1.9"}]]
-          (spyx-pretty expected)
-          (is-set= (spyx-pretty result-0) expected)
+          (is-set= result-0 expected)
           (is-set= result-1 expected)
           (is-set= result-2 expected)
           (is-set= result-3 expected)))

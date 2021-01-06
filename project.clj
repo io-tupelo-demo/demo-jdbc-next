@@ -13,7 +13,7 @@
                  [org.postgresql/postgresql "42.2.18"] ; https://mvnrepository.com/artifact/org.postgresql/postgresql
                  [prismatic/schema "1.1.12"]
                  [seancorfield/next.jdbc "1.1.613"]
-                 [tupelo "20.12.16"]
+                 [tupelo "21.01.05"]
                  ]
   :profiles {:dev     {:dependencies []
                        :plugins      [[com.jakemccrary/lein-test-refresh "0.24.1"]

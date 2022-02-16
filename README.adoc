@@ -64,6 +64,14 @@ Feel free to look inside the two Bash scripts to see the details.
 
     postgres=# exit
 
+or run as a one-liner:
+
+    > ./psql-start.bash   --command='select version();'
+                                                               version
+    -----------------------------------------------------------------------------------------------------------------------------
+     PostgreSQL 14.2 (Debian 14.2-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+    (1 row)
+
 == Run the Unit Tests for H2 and Postgres
 
 === No Postgres, No Problem!

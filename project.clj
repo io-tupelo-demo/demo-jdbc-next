@@ -10,7 +10,7 @@
                  ; [org.clojure/java.jdbc "0.7.11"]
                  [org.clojure/clojure "1.10.3"]
                  [org.clojure/test.check "1.1.1"]
-                 ; [org.postgresql/postgresql "42.2.18"] ; https://mvnrepository.com/artifact/org.postgresql/postgresql
+                 [org.postgresql/postgresql "42.3.3"] ; https://mvnrepository.com/artifact/org.postgresql/postgresql
                  [prismatic/schema "1.2.0"]
                  [seancorfield/next.jdbc "1.2.659"]
                  [tupelo "22.02.09"]

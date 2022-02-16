@@ -1,36 +1,111 @@
-# demo
+= Demo for Clojure Connection to PostgreSQL via Next.JDBC
 
-FIXME: description
+If you need a SQL database, the best answer is usually Postgres (nee PostgreSQL).
+The easiest way to access Postgres from Clojure is using the
+link:https://github.com/seancorfield/next-jdbc[Next.JDBC] library.
 
-## Installation
+This demo runs Postgres in a
+link:https://www.docker.com[Docker] container and shows basic access via Next.JDBC
 
-Download from http://example.com/FIXME.
+== Setup
 
-## Usage
+Make sure you have docker installed on your computer.  You should be able to do the following on the
+command line:
 
-FIXME: explanation
+```bash
+> docker --version
+Docker version 20.10.7, build 20.10.7-0ubuntu1~20.04.2
+```
 
-    $ java -jar clj-0.1.0-standalone.jar [args]
+You should not have to use `sudo` to make the above work.
+If it fails, please see
+https://stackoverflow.com/questions/29101043/cant-connect-to-docker-from-docker-compose[this page on StackOverflow.com]
 
-## Options
+== Usage
 
-FIXME: listing of options this app accepts.
+Kick off a local version of Postgres running in Docker via:
 
-## Examples
+```bash
+> ./pg-start.bash
+c406d9cb25f1f57025620ac32d97707eef6f11b44e763d853dad03a7a015b5e5    # <= Docker container ID
+```
 
-...
+Verify Postgres is running via the PSQL command:
 
-### Bugs
+```pre
+> psql-start.bash --version
+psql (PostgreSQL) 14.0 (Debian 14.0-1.pgdg110+1)
 
-...
+```
 
-### Any Other Sections
-### That You Think
-### Might be Useful
+All Postgres files will be saved locally under your home directory in:
+
+    $HOME/docker/volumes/postgres
+
+You can stop the Postgres container by typing:
+
+    > ./pg-stop.bash        # or just type:  docker stop pg-docker
+
+Feel free to look inside the two Bash scripts to see the details.
+
+== Interact with the Postgres DB via PSQL from the Command Line:
+
+```pre
+  > psql-start.bash
+  psql (14.0 (Debian 14.0-1.pgdg110+1))
+  Type "help" for help.
+
+  postgres=# select version();
+                                       version
+  ------------------------------------------------------------------------------------------
+   PostgreSQL 14.0 (Debian 14.0-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+  (1 row)
+
+  postgres=# exit
+```
+
+== Unit Tests to Demonstrate Next.JDBC
+
+=== Prepare to Run the Unit Tests
+
+Before you can run the unit tests, you need to create the database `example`:
+
+    > psql-start.bash
+    psql (14.2)
+    Type "help" for help.
+
+    postgres=# create database example;         # create the db `example`
+    CREATE DATABASE
+
+    postgres=# \l                               # list all DBs
+    List of databases
+    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
+    -----------+----------+----------+------------+------------+-----------------------
+    example   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+    postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+    template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+    |          |          |            |            | postgres=CTc/postgres
+    template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+    |          |          |            |            | postgres=CTc/postgres
+    (4 rows)
+
+    postgres=# exit         # or use CTRL-D
+
+=== Run the Unit Tests
+
+    > lein clean ; lein test
+
+    Testing _bootstrap
+
+    Testing tst.demo.jdbc-postgres
+
+    Ran 3 tests containing 21 assertions.
+    0 failures, 0 errors.
+
 
 ## License
 
-Copyright © 2018 FIXME
+Copyright © Alan Thompson
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.

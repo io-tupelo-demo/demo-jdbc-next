@@ -66,7 +66,7 @@ Feel free to look inside the two Bash scripts to see the details.
   postgres=# exit
 ```
 
-==
+== Run the Unit Tests for H2 and Postgres
 
 === No Postgres, No Problem!
 

@@ -6,7 +6,7 @@
     [next.jdbc.sql :as sql]
     ))
 
-(def postgres-enable true) ; ***** change value to `false` to disable usage of PostgreSQL DB *****
+(def postgres-enable true) ; ***** change value to `false` to disable PostgreSQL unit tests *****
 
 (when postgres-enable
 
@@ -19,6 +19,7 @@
   (def ds (jdbc/get-datasource db-info))
 
   ; NOTE: ***** Must MANUALLY  create DB 'example' before run this test! *****
+  ;       In PSQL, do `create database example;`.  See the README.
   (dotest
     (jdbc/execute! ds ["drop table if exists address"])
     (let [r11 (jdbc/execute! ds ["
@@ -165,5 +166,4 @@
             (is-set= result-2 expected)
             (is-set= result-3 expected)))
         )))
-
   )

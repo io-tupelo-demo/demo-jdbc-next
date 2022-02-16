@@ -1,4 +1,4 @@
-= Demo for Clojure Connection to PostgreSQL via Next.JDBC
+= Demo for Clojure Connection to PostgreSQL and H2 Databases via Next.JDBC
 
 If you need a SQL database, the best answer is usually Postgres (nee PostgreSQL).
 The easiest way to access Postgres from Clojure is using the
@@ -8,6 +8,8 @@ This demo runs Postgres in a
 link:https://www.docker.com[Docker] container and shows basic access via Next.JDBC
 
 == Setup
+
+=== Ensure Docker is Installed
 
 Make sure you have docker installed on your computer.  You should be able to do the following on the
 command line:
@@ -21,7 +23,7 @@ You should not have to use `sudo` to make the above work.
 If it fails, please see
 https://stackoverflow.com/questions/29101043/cant-connect-to-docker-from-docker-compose[this page on StackOverflow.com]
 
-== Usage
+=== Verify your Docker Access to Postgres
 
 Kick off a local version of Postgres running in Docker via:
 
@@ -48,7 +50,7 @@ You can stop the Postgres container by typing:
 
 Feel free to look inside the two Bash scripts to see the details.
 
-== Interact with the Postgres DB via PSQL from the Command Line:
+=== Interact with the Postgres DB via PSQL from the Command Line:
 
 ```pre
   > psql-start.bash
@@ -64,9 +66,23 @@ Feel free to look inside the two Bash scripts to see the details.
   postgres=# exit
 ```
 
+==
+
+=== No Postgres, No Problem!
+
+If you don't have Docker available, or if you don't want to run the Postgres unit test,
+no problem!  Just find go to the file `test/tst/demo/jdbc_postgres.clj` and make edits so
+the Var `postgres-enable` looks like this:
+
+    (def postgres-enable false) ; ***** change value to `false` to disable usage of PostgreSQL DB *****
+
+Now, all the Postgres unit tests will be skipped, but your H2 database tests
+will still run (H2 is a pure Java DB, which doesn't require installation of
+the DB and/or Docker).
+
 == Unit Tests to Demonstrate Next.JDBC
 
-=== Prepare to Run the Unit Tests
+=== Prepare to Run the Unit Tests with Postgres (if enabled)
 
 Before you can run the unit tests, you need to create the database `example`:
 
@@ -95,11 +111,15 @@ Before you can run the unit tests, you need to create the database `example`:
 
     > lein clean ; lein test
 
-    Testing _bootstrap
+    -----------------------------------
+       Clojure 1.10.3    Java 17.0.1
+    -----------------------------------
 
-    Testing tst.demo.jdbc-postgres
+    lein test tst.demo.jdbc-h2
 
-    Ran 3 tests containing 21 assertions.
+    lein test tst.demo.jdbc-postgres
+
+    Ran 7 tests containing 42 assertions.
     0 failures, 0 errors.
 
 

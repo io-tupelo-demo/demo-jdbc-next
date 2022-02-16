@@ -1,4 +1,4 @@
-(ns tst.demo.jdbc
+(ns tst.demo.jdbc-h2
   (:use demo.core tupelo.core tupelo.test)
   (:require
     [next.jdbc :as jdbc]

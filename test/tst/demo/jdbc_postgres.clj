@@ -6,8 +6,10 @@
     [next.jdbc.sql :as sql]
     ))
 
-(def postgres-enable true) ; ***** change value to `false` to disable PostgreSQL unit tests *****
+; ***** change this value to `false` to disable PostgreSQL unit tests *****
+(def postgres-enable true)
 
+;---------------------------------------------------------------------------------------------------
 (when postgres-enable
 
   (def db-info {:dbtype   "postgres"

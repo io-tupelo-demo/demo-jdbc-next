@@ -4,13 +4,11 @@
   :dependencies [
                  [com.h2database/h2 "1.4.200"] ; #todo cannot upgrade yet or crash!
                  [hikari-cp "2.13.0"]
-                 ; #todo try porsas
-                 ; [org.clojure/java.jdbc "0.7.11"]  ; old lib - don't use
                  [org.clojure/clojure "1.10.3"]
                  [org.clojure/test.check "1.1.1"]
                  [org.postgresql/postgresql "42.3.3"] ; see https://mvnrepository.com/artifact/org.postgresql/postgresql for info
                  [prismatic/schema "1.2.0"]
-                 [seancorfield/next.jdbc "1.2.659"]
+                 [seancorfield/next.jdbc "1.2.659"] ; #todo try porsas
                  [tupelo "22.02.09"]
                  ]
   :profiles {:dev {:dependencies []
@@ -23,8 +21,6 @@
 
   :source-paths ["src"]
   :test-paths ["test"]
-  :libs ["libs/"]
-  :java-source-paths ["src-java"]
   :target-path "target/%s"
   :jvm-opts ["-Xms500m" "-Xmx2g"]
   )

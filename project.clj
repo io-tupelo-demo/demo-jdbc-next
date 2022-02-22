@@ -6,7 +6,7 @@
                  [hikari-cp "2.13.0"]
                  [org.clojure/clojure "1.10.3"]
                  [org.clojure/test.check "1.1.1"]
-                 [org.postgresql/postgresql "42.3.3"] ; see https://mvnrepository.com/artifact/org.postgresql/postgresql for info
+                 [org.postgresql/postgresql "42.3.3"]
                  [prismatic/schema "1.2.0"]
                  [seancorfield/next.jdbc "1.2.659"] ; #todo try porsas
                  [tupelo "22.02.09"]

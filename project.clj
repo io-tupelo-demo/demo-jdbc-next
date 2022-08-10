@@ -1,20 +1,32 @@
 (defproject demo "0.1.0-SNAPSHOT"
   :license {:name "Eclipse Public License"
             :url  "http://www.eclipse.org/legal/epl-v10.html"}
+
   :dependencies [
                  [com.h2database/h2 "1.4.200"] ; #todo cannot upgrade yet or crash!
-                 [hikari-cp "2.13.0"]
-                 [org.clojure/clojure "1.10.3"]
+                 [hikari-cp "2.14.0"]
+                 [org.clojure/clojure "1.11.1"]
                  [org.clojure/test.check "1.1.1"]
-                 [org.postgresql/postgresql "42.3.3"]
-                 [prismatic/schema "1.2.0"]
+                 [org.postgresql/postgresql "42.3.6"]
+                 [prismatic/schema "1.2.1"]
                  [seancorfield/next.jdbc "1.2.659"] ; #todo try porsas
-                 [tupelo "22.02.09"]
+                 [tupelo "22.07.25a"]
                  ]
-  :profiles {:dev {:dependencies []
-                   :plugins      [[com.jakemccrary/lein-test-refresh "0.25.0"]
-                                  [lein-ancient "0.7.0"]
-                                  ]}}
+
+  ;:dependencies [
+  ;               ; [com.h2database/h2 "2.1.214"]
+  ;               [com.h2database/h2 "1.4.200"] ; #todo cannot upgrade yet or crash!
+  ;               [hikari-cp "2.14.0"]
+  ;               [org.clojure/clojure "1.11.1"]
+  ;               [org.postgresql/postgresql "42.3.3"]
+  ;               [prismatic/schema "1.3.5"]
+  ;               [seancorfield/next.jdbc "1.2.659"] ; #todo try porsas
+  ;               [tupelo "22.07.25a"]
+  ;               ]
+
+  :plugins      [[com.jakemccrary/lein-test-refresh "0.25.0"]
+                 [lein-ancient "0.7.0"]
+                 ]
 
   :global-vars {*warn-on-reflection* false}
   :main ^:skip-aot demo.core

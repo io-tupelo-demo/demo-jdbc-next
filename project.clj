@@ -4,13 +4,13 @@
 
   :dependencies [
                  [com.h2database/h2 "1.4.200"] ; #todo cannot upgrade yet or crash!
-                 [hikari-cp "2.14.0"]
+                 [hikari-cp "3.0.1"]
                  [org.clojure/clojure "1.11.1"]
                  [org.clojure/test.check "1.1.1"]
-                 [org.postgresql/postgresql "42.4.1"]
-                 [prismatic/schema "1.3.5"]
+                 [org.postgresql/postgresql "42.6.0"]
+                 [prismatic/schema "1.4.1"]
                  [seancorfield/next.jdbc "1.2.659"] ; #todo try porsas
-                 [tupelo "22.07.25a"]
+                 [tupelo "23.07.04"]
                  ]
 
   :plugins      [[com.jakemccrary/lein-test-refresh "0.25.0"]

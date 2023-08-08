@@ -49,6 +49,7 @@ You can stop the Postgres container by typing:
     > ./pg-stop.bash        # or just type:  docker stop pg-docker
 
 Feel free to look inside the two Bash scripts to see the details.
+Note that we are using Postgres 14 at present.
 
 === Interact with the Postgres DB via PSQL from the Command Line:
 

@@ -53,6 +53,7 @@ Note that we are using Postgres 14 at present.
 
 === Interact with the Postgres DB via PSQL from the Command Line:
 
+```
     > psql-start.bash
     psql (14.0 (Debian 14.0-1.pgdg110+1))
     Type "help" for help.
@@ -64,14 +65,17 @@ Note that we are using Postgres 14 at present.
     (1 row)
 
     postgres=# exit
+```
 
 or run as a one-liner:
 
+```
     > ./psql-start.bash  --command='select version();'
                                                                version
     -----------------------------------------------------------------------------------------------------------------------------
      PostgreSQL 14.2 (Debian 14.2-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
     (1 row)
+```
 
 == Run the Unit Tests for H2 and Postgres
 
@@ -93,6 +97,7 @@ the DB and/or Docker).
 
 Before you can run the unit tests, you need to create the database `example`:
 
+```
     > psql-start.bash
     psql (14.2)
     Type "help" for help.
@@ -113,9 +118,11 @@ Before you can run the unit tests, you need to create the database `example`:
     (4 rows)
 
     postgres=# exit         # or use CTRL-D
+```
 
 === Run the Unit Tests
 
+```
     > lein clean ; lein test
 
     -----------------------------------
@@ -128,6 +135,11 @@ Before you can run the unit tests, you need to create the database `example`:
 
     Ran 7 tests containing 42 assertions.
     0 failures, 0 errors.
+``` 
+
+and then clean up the container:
+
+    > ./pg-stop.bash        # or just type:  docker stop pg-docker 
 
 
 ## License

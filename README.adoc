@@ -54,27 +54,27 @@ Note that we are using Postgres 14 at present.
 === Interact with the Postgres DB via PSQL from the Command Line:
 
 ```
-    > psql-start.bash
-    psql (14.0 (Debian 14.0-1.pgdg110+1))
-    Type "help" for help.
+> psql-start.bash
+psql (14.0 (Debian 14.0-1.pgdg110+1))
+Type "help" for help.
 
-    postgres=# select version();
-                                       version
-    ------------------------------------------------------------------------------------------
-    PostgreSQL 14.0 (Debian 14.0-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
-    (1 row)
+postgres=# select version();
+                                   version
+------------------------------------------------------------------------------------------
+PostgreSQL 14.0 (Debian 14.0-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+(1 row)
 
-    postgres=# exit
+postgres=# exit
 ```
 
 or run as a one-liner:
 
-```
-    > ./psql-start.bash  --command='select version();'
-                                                               version
-    -----------------------------------------------------------------------------------------------------------------------------
-     PostgreSQL 14.2 (Debian 14.2-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
-    (1 row)
+```shell
+> ./psql-start.bash  --command='select version();'
+                                                           version
+-----------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 14.2 (Debian 14.2-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+(1 row)
 ```
 
 == Run the Unit Tests for H2 and Postgres
@@ -97,50 +97,49 @@ the DB and/or Docker).
 
 Before you can run the unit tests, you need to create the database `example`:
 
-```
-    > psql-start.bash
-    psql (14.2)
-    Type "help" for help.
+```shell
+> psql-start.bash
+psql (14.2)
+Type "help" for help.
 
-    postgres=# create database example;         # create the db `example`
-    CREATE DATABASE
+postgres=# create database example;         # create the db `example`
+CREATE DATABASE
 
-    postgres=# \l                               # list all DBs
-    List of databases
-    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
-    -----------+----------+----------+------------+------------+-----------------------
-    example   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
-    postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
-    template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-    |          |          |            |            | postgres=CTc/postgres
-    template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-    |          |          |            |            | postgres=CTc/postgres
-    (4 rows)
+postgres=# \l                               # list all DBs
+List of databases
+Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
+-----------+----------+----------+------------+------------+-----------------------
+example   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+|          |          |            |            | postgres=CTc/postgres
+template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+|          |          |            |            | postgres=CTc/postgres
+(4 rows)
 
-    postgres=# exit         # or use CTRL-D
+postgres=# exit         # or use CTRL-D
 ```
 
 === Run the Unit Tests
 
-```
-    > lein clean ; lein test
+```bash
+> lein clean ; lein test
 
-    -----------------------------------
-       Clojure 1.10.3    Java 17.0.1
-    -----------------------------------
+-----------------------------------
+   Clojure 1.10.3    Java 17.0.1
+-----------------------------------
 
-    lein test tst.demo.jdbc-h2
+lein test tst.demo.jdbc-h2
 
-    lein test tst.demo.jdbc-postgres
+lein test tst.demo.jdbc-postgres
 
-    Ran 7 tests containing 42 assertions.
-    0 failures, 0 errors.
+Ran 7 tests containing 42 assertions.
+0 failures, 0 errors.
 ``` 
 
 and then clean up the container:
 
     > ./pg-stop.bash        # or just type:  docker stop pg-docker 
-
 
 ## License
 
